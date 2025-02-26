@@ -29,6 +29,30 @@ while running:
   """Draw to our screen"""
   #clear screen
   screen.fill("white")
+
+  # draw rectangle
+  pygame.draw.rect(
+    screen, 
+    "green", 
+    pygame.Rect((300,320), (50, 50))
+  )
+
+  '''#draw circle
+  pygame.draw.circle(screen, "red", (100,100), 40)
+
+  #draw line
+  pygame.draw.line(
+    screen, 
+    "pink", 
+    (100,100), (200,200), 5)
+
+  #draw ellipse
+  pygame.draw.ellipse(
+    surface=screen, 
+    color="purple", 
+    rect=pygame.Rect((100,100), (100,500))
+  )'''
+
   #update screen
   pygame.display.flip()
   #fps
