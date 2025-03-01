@@ -1,4 +1,4 @@
-entrypoint = "Snake_1/snake.py"
+entrypoint = "Frogger/frogger.py"
 modules = ["python-3.11"]
 
 [nix]
@@ -11,5 +11,5 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "Snake_1/snake.py"]
+run = ["python3", "Frogger/frogger.py"]
 deploymentTarget = "cloudrun"
