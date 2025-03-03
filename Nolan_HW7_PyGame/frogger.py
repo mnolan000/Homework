@@ -8,6 +8,7 @@ Description: Program that creates the shapes for the frog, the cars, the roads, 
 
 
 import pygame
+from pygame.constants import KEYDOWN
 
 # init pygame
 pygame.init()
@@ -25,6 +26,13 @@ clock = pygame.time.Clock()
 dt = 0
 speed = 10
 
+#frog current position
+cur_pos = [300,200]
+car1_pos = [100,100]
+car2_pos = [100,100]
+car3_pos = [100,100]
+direction = "left"
+
 """game loop"""
 running = True
 while running:
@@ -32,9 +40,46 @@ while running:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       running = False
+
+    if event.type == KEYDOWN:
+      #wasd
+      if event.key == pygame.K_ESCAPE: #escape key
+        running = False
+      if event.key == pygame.K_w: #up direction
+        cur_pos[1] -= 50  #y coordinate
+      if event.key == pygame.K_s: #down direction
+        cur_pos[1] += 50  #y coordinate
+      if event.key == pygame.K_a: #left direction
+        cur_pos[0] -= 50  #x coordinate
+      if event.key == pygame.K_d: #right direction
+        cur_pos[0] += 50  #x coordinate
+      #arrow keys
+      if event.key == pygame.K_UP: #up direction
+        cur_pos[1] -= 50  #y coordinate
+      if event.key == pygame.K_DOWN: #down direction
+        cur_pos[1] += 50  #y coordinate
+      if event.key == pygame.K_LEFT: #left direction
+        cur_pos[0] -= 50  #x coordinate
+      if event.key == pygame.K_RIGHT: #right direction
+        cur_pos[0] += 50  #x coordinate
   
   """Update our game state"""
+  
+  if direction == "left":
+    car1_pos[0] -= 20
+  if direction == "right":
+    car1_pos[0] += 20
+  
 
+  if cur_pos[0] < 0:  #x direction
+    cur_pos[0] = 0
+  if cur_pos[0] > width-50:  
+    cur_pos[0] = width-50
+
+  if cur_pos[1] < 0:
+    cur_pos[1] = 0
+  if cur_pos[1] > height - 50:
+    cur_pos[1] = height - 50
   """Draw to our screen"""
   #clear screen
   screen.fill("grey")
@@ -45,44 +90,33 @@ while running:
     "pink", 
     pygame.Rect((0,300), (600, 100))
   )
-  # draw frog
-  pygame.draw.rect(
-    screen, 
-    "green", 
-    pygame.Rect((300,320), (50, 50))
-  )
-  #roads
+  #road
   pygame.draw.rect(
     screen, 
     "black", 
-    pygame.Rect((0,95), (600, 60))
+    pygame.Rect((0,50), (600, 200))
   )
-  pygame.draw.rect(
-    screen, 
-    "black", 
-    pygame.Rect((0,160), (600, 60))
-  )
-  pygame.draw.rect(
-    screen, 
-    "black", 
-    pygame.Rect((0,225), (600, 60))
-  )
-  #cars
   
+  #cars
+  direction = "right"
   pygame.draw.rect(
     screen, 
     "purple", 
-    pygame.Rect((100,100), (50, 50))
+    pygame.Rect((car1_pos[0],70), (50, 50))
   )
+  if car1_pos[0] == 600:
+    car1_pos[0] = 0
+
+
   pygame.draw.rect(
     screen, 
     "blue", 
-    pygame.Rect((200,165), (50, 50))
+    pygame.Rect((car2_pos[0],130), (50, 50))
   )
   pygame.draw.rect(
     screen, 
     "magenta", 
-    pygame.Rect((400,230), (50, 50))
+    pygame.Rect((car3_pos[0],190), (50, 50))
   )
   #end
   pygame.draw.rect(
@@ -90,7 +124,12 @@ while running:
     "pink", 
     pygame.Rect((0,0), (600, 60))
   )
-
+  # draw frog
+  pygame.draw.rect(
+    screen, 
+    "green", 
+    pygame.Rect(cur_pos[0], cur_pos[1], 50, 50)
+  )
   #update screen
   pygame.display.flip()
   #fps
