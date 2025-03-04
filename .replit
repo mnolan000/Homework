@@ -1,4 +1,4 @@
-entrypoint = "Nolan_HW7_PyGame/frogger.py"
+entrypoint = "Nolan_HW8_MovingObjects/frogger.py"
 modules = ["python-3.11"]
 
 [nix]
@@ -11,5 +11,5 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "Nolan_HW7_PyGame/frogger.py"]
+run = ["python3", "Nolan_HW8_MovingObjects/frogger.py"]
 deploymentTarget = "cloudrun"

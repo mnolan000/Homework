@@ -1,8 +1,8 @@
 """
-File: frogger.py
+File: Nolan_HW8_MovingObjects/frogger.py
 Author: Matthew Nolan
-Date: 3/1/25
-Description: Program that creates the shapes for the frog, the cars, the roads, and the start and end areas
+Date: 3/4/25
+Description: Program where you can move the frog (green square), he can't go off screen, and there are cars (colored squares) that move infinitely
 
 """
 
@@ -27,11 +27,10 @@ dt = 0
 speed = 10
 
 #frog current position
-cur_pos = [300,200]
+cur_pos = [250,400]
 car1_pos = [100,100]
 car2_pos = [100,100]
-car3_pos = [100,100]
-direction = "left"
+car3_pos = [300,100]
 
 """game loop"""
 running = True
@@ -65,10 +64,11 @@ while running:
   
   """Update our game state"""
   
-  if direction == "left":
-    car1_pos[0] -= 20
-  if direction == "right":
-    car1_pos[0] += 20
+  
+  #set direction of cars
+  car1_pos[0] += 20
+  car2_pos[0] -= 20
+  car3_pos[0] += 20
   
 
   if cur_pos[0] < 0:  #x direction
@@ -98,7 +98,6 @@ while running:
   )
   
   #cars
-  direction = "right"
   pygame.draw.rect(
     screen, 
     "purple", 
@@ -107,17 +106,23 @@ while running:
   if car1_pos[0] == 600:
     car1_pos[0] = 0
 
-
+ 
   pygame.draw.rect(
     screen, 
     "blue", 
     pygame.Rect((car2_pos[0],130), (50, 50))
   )
+  if car2_pos[0] == 0:
+    car2_pos[0] = 600
+
   pygame.draw.rect(
     screen, 
     "magenta", 
     pygame.Rect((car3_pos[0],190), (50, 50))
   )
+  if car3_pos[0] == 600:
+    car3_pos[0] = 0
+    
   #end
   pygame.draw.rect(
     screen, 
