@@ -27,7 +27,7 @@ dt = 0
 speed = 10
 
 #frog current position
-cur_pos = [250,400]
+cur_pos = [250,310]
 car1_pos = [100,100]
 car2_pos = [100,100]
 car3_pos = [300,100]
@@ -47,22 +47,22 @@ while running:
       if event.key == pygame.K_ESCAPE: #escape key
         running = False
       if event.key == pygame.K_w: #up direction
-        cur_pos[1] -= 50  #y coordinate
+        cur_pos[1] -= 60  #y coordinate
       if event.key == pygame.K_s: #down direction
-        cur_pos[1] += 50  #y coordinate
+        cur_pos[1] += 60  #y coordinate
       if event.key == pygame.K_a: #left direction
-        cur_pos[0] -= 50  #x coordinate
+        cur_pos[0] -= 60  #x coordinate
       if event.key == pygame.K_d: #right direction
-        cur_pos[0] += 50  #x coordinate
+        cur_pos[0] += 60  #x coordinate
       #arrow keys
       if event.key == pygame.K_UP: #up direction
-        cur_pos[1] -= 50  #y coordinate
+        cur_pos[1] -= 60  #y coordinate
       if event.key == pygame.K_DOWN: #down direction
-        cur_pos[1] += 50  #y coordinate
+        cur_pos[1] += 60  #y coordinate
       if event.key == pygame.K_LEFT: #left direction
-        cur_pos[0] -= 50  #x coordinate
+        cur_pos[0] -= 60  #x coordinate
       if event.key == pygame.K_RIGHT: #right direction
-        cur_pos[0] += 50  #x coordinate
+        cur_pos[0] += 60  #x coordinate
   
   """Update our game state"""
   
@@ -91,13 +91,13 @@ while running:
   pygame.draw.rect(
     screen, 
     "pink", 
-    pygame.Rect((0,300), (600, 100))
+    pygame.Rect((0,200), (600, 300))
   )
   #road
   pygame.draw.rect(
     screen, 
     "black", 
-    pygame.Rect((0,50), (600, 300))
+    pygame.Rect((0,50), (600, 255))
   )
   
   #cars
@@ -129,7 +129,7 @@ while running:
   pygame.draw.rect(
     screen, 
     "red", 
-    pygame.Rect((car4_pos[0],270), (70, 50))
+    pygame.Rect((car4_pos[0],250), (70, 50))
   )
   if car4_pos[0] == 0:
     car4_pos[0] = 600
@@ -146,6 +146,13 @@ while running:
     "green", 
     pygame.Rect(cur_pos[0], cur_pos[1], 50, 50)
   )
+
+  if cur_pos == car3_pos:
+    running = False
+
+  print(cur_pos)
+  print(car4_pos)
+
   #update screen
   pygame.display.flip()
   #fps
