@@ -1,5 +1,5 @@
 """
-File: Nolan_HW8_MovingObjects/frogger.py
+File: Nolan_HW9_Functions/frogger.py
 Author: Matthew Nolan
 Date: 3/4/25
 Description: 
@@ -12,6 +12,25 @@ from pygame.constants import KEYDOWN
 
 # init pygame
 pygame.init()
+
+#create font
+system_fonts = pygame.font.get_fonts()
+print(system_fonts)
+my_font = pygame.font.SysFont(system_fonts[0], size=48, bold=True, italic=False)
+
+def draw_text(text, coordinate, text_color, my_font, screen):
+  """
+  This function draws text to the screen
+  text: variable that holds text
+  coordinate: holds coordinate values
+  text_color: holds the color of the text
+  """
+  text_image = my_font.render(text, True, text_color)
+  text_rect = text_image.get_rect()
+  text_rect.topleft = coordinate
+  screen.blit(text_image, text_rect)
+
+
 
 # window dimensions
 width = 600
@@ -32,6 +51,7 @@ car1_pos = [100,100]
 car2_pos = [100,100]
 car3_pos = [300,100]
 car4_pos = [200, 100]
+score = 0
 
 
 """game loop"""
@@ -68,10 +88,11 @@ while running:
   
   
   #set direction of cars
-  car1_pos[0] += 20
-  car2_pos[0] -= 20
-  car3_pos[0] += 20
-  car4_pos[0] -= 40
+  car_speed = 25
+  car1_pos[0] += car_speed
+  car2_pos[0] -= car_speed
+  car3_pos[0] += car_speed
+  car4_pos[0] -= car_speed
   
 
   if cur_pos[0] < 0:  #x direction
@@ -87,6 +108,7 @@ while running:
   #clear screen
   screen.fill("grey")
 
+
   #start
   pygame.draw.rect(
     screen, 
@@ -101,7 +123,7 @@ while running:
   )
   
   #cars
-  pygame.draw.rect(
+  car1 = pygame.draw.rect(
     screen, 
     "purple", 
     pygame.Rect((car1_pos[0],70), (70, 50))
@@ -110,7 +132,7 @@ while running:
     car1_pos[0] = 0
 
  
-  pygame.draw.rect(
+  car2 = pygame.draw.rect(
     screen, 
     "blue", 
     pygame.Rect((car2_pos[0],130), (70, 50))
@@ -118,7 +140,7 @@ while running:
   if car2_pos[0] == 0:
     car2_pos[0] = 600
 
-  pygame.draw.rect(
+  car3 = pygame.draw.rect(
     screen, 
     "magenta", 
     pygame.Rect((car3_pos[0],190), (70, 50))
@@ -126,7 +148,7 @@ while running:
   if car3_pos[0] == 600:
     car3_pos[0] = 0
 
-  pygame.draw.rect(
+  car4 = pygame.draw.rect(
     screen, 
     "red", 
     pygame.Rect((car4_pos[0],250), (70, 50))
@@ -135,23 +157,36 @@ while running:
     car4_pos[0] = 600
     
   #end
-  pygame.draw.rect(
+  end = pygame.draw.rect(
     screen, 
     "pink", 
     pygame.Rect((0,0), (600, 60))
   )
   # draw frog
-  pygame.draw.rect(
+
+  frog = pygame.draw.rect(
     screen, 
     "green", 
     pygame.Rect(cur_pos[0], cur_pos[1], 50, 50)
   )
 
-  if cur_pos == car3_pos:
-    running = False
+  draw_text(f'score: {score}', (0,0), "black", my_font, screen)
 
-  print(cur_pos)
-  print(car4_pos)
+  if pygame.Rect.colliderect(frog, car1) or     pygame.Rect.colliderect(frog, car2) or pygame.Rect.colliderect(frog, car3) or pygame.Rect.colliderect(frog, car4):
+    score -=1
+    cur_pos = [250,310]
+    if score < 0:
+      draw_text("You lost!", (250,0), "red", my_font, screen)
+      
+
+  if pygame.Rect.colliderect(frog, end):
+    score +=1
+    cur_pos = [250,310]
+    if score >= 5:
+      draw_text("You won!", (250,0), "red", my_font, screen)
+      
+      
+  
 
   #update screen
   pygame.display.flip()
